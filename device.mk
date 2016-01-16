@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-LOCAL_PATH := device/OnePlus/bacon
+LOCAL_PATH := device/oneplus/bacon
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 	LOCAL_KERNEL := $(LOCAL_PATH)/kernel
@@ -26,4 +26,4 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/kernel:kernel \
     $(LOCAL_PATH)/dt.img:dt.img
 
-$(call inherit-product-if-exists, vendor/OnePlus/bacon/device-vendor.mk)
+$(call inherit-product-if-exists, vendor/oneplus/bacon/device-vendor.mk)

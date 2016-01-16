@@ -15,7 +15,7 @@
 #
 
 # Use the non-open-source parts, if they're present
--include vendor/OnePlus/bacon/BoardConfigVendor.mk
+-include vendor/oneplus/bacon/BoardConfigVendor.mk
 
 # Platform
 TARGET_BOARD_PLATFORM := msm8974
@@ -35,16 +35,18 @@ TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
 
 # Kernel
-TARGET_PREBUILT_KERNEL := device/OnePlus/bacon/kernel
-BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=qcom androidboot.selinux=enforcing user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3
-BOARD_KERNEL_BASE := 0x00000000
-BOARD_KERNEL_PAGESIZE := 2048
+TARGET_PREBUILT_KERNEL 	  := device/oneplus/bacon/kernel
+BOARD_KERNEL_CMDLINE 	  := console=ttyHSL0,115200,n8 androidboot.hardware=qcom androidboot.selinux=enforcing user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3
+BOARD_KERNEL_BASE 	  := 0x00000000
+BOARD_KERNEL_PAGESIZE 	  := 2048
 BOARD_KERNEL_SEPARATED_DT := true
-BOARD_MKBOOTIMG_ARGS := --dt device/OnePlus/bacon/dt.img --kernel_offset 0x00008000 --ramdisk_offset 0x02000000 --tags_offset 0x01e00000
+BOARD_MKBOOTIMG_ARGS 	  := --dt device/oneplus/bacon/dt.img --kernel_offset 0x00008000 --ramdisk_offset 0x02000000 --tags_offset 0x01e00000
+BOARD_CUSTOM_BOOTIMG_MK   :=  device/oneplus/bacon/mkbootimg.mk
 
 
 #TWRP Recovery
-TARGET_RECOVERY_FSTAB := device/OnePlus/bacon/recovery.fstab
+TW_THEME := portrait_hdpi
+TARGET_RECOVERY_FSTAB := device/oneplus/bacon/recovery.fstab
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
 BOARD_HAS_LARGE_FILESYSTEM := true
@@ -56,5 +58,4 @@ TW_INCLUDE_JB_CRYPTO := true
 BOARD_SUPPRESS_SECURE_ERASE := true
 RECOVERY_SDCARD_ON_DATA := true
 
-#TWRP THEME
-TW_CUSTOM_THEME := device/OnePlus/bacon/twrp
+TW_DEFAULT_LANGUAGE := cn

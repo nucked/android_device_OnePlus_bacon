@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
-$(call inherit-product, device/OnePlus/bacon/device.mk)
+$(call inherit-product, device/oneplus/bacon/device.mk)
 
 PRODUCT_NAME := full_bacon
 PRODUCT_DEVICE := bacon
