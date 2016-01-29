@@ -24,6 +24,7 @@ endif
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/kernel:kernel \
-    $(LOCAL_PATH)/dt.img:dt.img
+    $(LOCAL_PATH)/dt.img:dt.img  \
+    $(LOCAL_PATH)/twrp.fstab:recovery/root/etc/twrp.fstab
 
 $(call inherit-product-if-exists, vendor/oneplus/bacon/device-vendor.mk)
