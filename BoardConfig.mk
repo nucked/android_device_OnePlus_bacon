@@ -60,3 +60,4 @@ RECOVERY_SDCARD_ON_DATA := true
 
 #Add Chinese Languages
 TW_EXTRA_LANGUAGES := true
+TW_DEFAULT_LANGUAGE := zh_CN
