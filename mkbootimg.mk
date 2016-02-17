@@ -1,19 +1,18 @@
-# Build and run dtbtool.
-DTBTOOL := $(HOST_OUT_EXECUTABLES)/dtbTool$(HOST_EXECUTABLE_SUFFIX)
-INSTALLED_DTIMAGE_TARGET := $(PRODUCT_OUT)/dt.img
 
-# Overload bootimg generation: Same as the original, + --dt arg.
-$(INSTALLED_BOOTIMAGE_TARGET): $(MKBOOTIMG) $(INTERNAL_BOOTIMAGE_FILES) $(INSTALLED_DTIMAGE_TARGET)
-	$(call pretty,"Target boot image: $@")
-	$(hide) $(MKBOOTIMG) $(INTERNAL_BOOTIMAGE_ARGS) $(BOARD_MKBOOTIMG_ARGS) --dt $(INSTALLED_DTIMAGE_TARGET) --output $@
-	$(hide) $(call assert-max-image-size,$@,$(BOARD_BOOTIMAGE_PARTITION_SIZE),raw)
-	@echo -e ${CL_CYN}"Made boot image: $@"${CL_RST}
 
-# Overload recoveryimg generation: Same as the original, + --dt arg.
-$(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) $(INSTALLED_DTIMAGE_TARGET) \
-		$(recovery_ramdisk) \
+$(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) $(MINIGZIP) \
+		$(recovery_uncompressed_ramdisk) \
 		$(recovery_kernel)
-	@echo -e ${CL_CYN}"----- Making recovery image ------"${CL_RST}
-	$(hide) $(MKBOOTIMG) $(INTERNAL_RECOVERYIMAGE_ARGS) $(BOARD_MKBOOTIMG_ARGS) --dt $(INSTALLED_DTIMAGE_TARGET) --output $@
+	@echo ----- Compressing recovery ramdisk ------
+	sed -i 's/ro.build.product=A0001/ro.build.product=ONE/g' $(TARGET_RECOVERY_ROOT_OUT)/default.prop
+	$(MKBOOTFS) $(TARGET_RECOVERY_ROOT_OUT) | $(MINIGZIP) > $(recovery_ramdisk)
+	@echo ----- Making recovery image ------
+	$(MKBOOTIMG) $(INTERNAL_RECOVERYIMAGE_ARGS) $(BOARD_MKBOOTIMG_ARGS) --output $@
+	@echo ----- Made recovery image -------- $@
 	$(hide) $(call assert-max-image-size,$@,$(BOARD_RECOVERYIMAGE_PARTITION_SIZE),raw)
-	@echo -e ${CL_CYN}"Made recovery image: $@"${CL_RST}
+
+
+$(INSTALLED_BOOTIMAGE_TARGET): $(MKBOOTIMG) $(INTERNAL_BOOTIMAGE_FILES)
+	$(call pretty,"Target boot image: $@")
+	$(hide) $(MKBOOTIMG) $(INTERNAL_BOOTIMAGE_ARGS) --output $@
+	$(hide) $(call assert-max-image-size,$@,$(BOARD_BOOTIMAGE_PARTITION_SIZE),raw)
